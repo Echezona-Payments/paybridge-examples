@@ -1,4 +1,4 @@
-# Node.js Server Starter
+# PayBridge Node.js Example Server
 
 This repository contains a simple Node.js server setup. Follow the instructions below to clone the repository, run the server, and start using it.
 
