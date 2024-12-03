@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PayBridge Inline Integration Sample</title>
+  </head>
+  <body>
+    <h1>PayBridge Inline Integration Example</h1>
+    <button id="payButton">Start Payment</button>
+
+    <script src="https://inline.paybridge.africa/v1.js"></script>
+    <script>
+      document
+        .getElementById("payButton")
+        .addEventListener("click", function () {
+          // Initialize PayBridgePayPop
+          const payPop = new PayBridgePayPop();
+
+          const request = {
+            mode: "Live", // 'Dev' or 'Live' environment
+            publicKey: "enter public key",
+            amount: "50",
+            currency: "NGN",
+            email: "customer@example.com",
+            phone: "08012345678",
+            firstName: "John",
+            lastName: "Doe",
+            callBackUrl: "https://ejeiokekeemmanuel.dev",
+            transactionId: Math.floor(Math.random() * 99999999) + "",
+          };
+
+          // Start a new transaction
+          payPop.newTransaction({
+            request,
+            onSuccess: function (response) {
+              console.log("Payment successful!", response);
+            },
+            onCancel: function () {
+              console.log("Payment was cancelled.");
+            },
+            onError: function (error) {
+              console.error("Payment failed:", error, error.response);
+              alert("An error occurred during payment.");
+            },
+          });
+        });
+    </script>
+  </body>
+</html>

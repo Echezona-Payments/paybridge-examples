@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PayBridge Example Nodejs</title>
+  </head>
+  <body>
+    <h1>PayBridge Standard Integration: Node.js</h1>
+    <h4>Your order: N2,000</h4>
+    <button type="button" id="start-payment-button">Pay Now</button>
+    <br />
+    <br />
+    <div id="payment-status" style="display: none"></div>
+
+    <script>
+      const startPaymentButton = document.getElementById(
+        "start-payment-button"
+      );
+      const paymentStatusDiv = document.getElementById("payment-status");
+
+      async function sendRequest() {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "/api/create-payment"); // Replace with your endpoint URL
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            // Redirect to the payment URL from the response
+            window.location.href = response.data.paymentUrl;
+            startPaymentButton.disabled = false; // Re-enable button for retries
+          } else {
+            console.error("Request failed.  Returned status of " + xhr.status);
+            paymentStatusDiv.textContent = `Payment failed. Please try again. Error: ${xhr.status} | ${xhr.statusText}`;
+            startPaymentButton.disabled = false;
+          }
+        };
+
+        xhr.onerror = () => {
+          console.error("Request failed.");
+          paymentStatusDiv.textContent = `Payment failed. Please try again. Error: Payment failed. Please try again.`;
+          startPaymentButton.disabled = false;
+        };
+        xhr.send();
+      }
+
+      startPaymentButton.addEventListener("click", async () => {
+        startPaymentButton.disabled = true;
+        paymentStatusDiv.textContent = "Processing payment...";
+        paymentStatusDiv.style.display = "block";
+
+        try {
+          const response = await sendRequest();
+        } catch (error) {
+          console.error(error);
+          paymentStatusDiv.textContent = `Payment failed. Please try again. Error: ${error}`;
+          startPaymentButton.disabled = false; // Re-enable button for retries
+        }
+      });
+    </script>
+  </body>
+</html>

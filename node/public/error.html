@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>An error occoured: PayBridge Example Nodejs</title>
+  </head>
+  <body>
+    <section>
+      <h1>Oops! An error occoured</h1>
+      <h4>Details</h4>
+      <div id="error-details"></div>
+    </section>
+
+    <script>
+      const queryString = window.location.search;
+      const params = new URLSearchParams(queryString);
+
+      const errorDetails = {};
+      for (const [key, value] of params.entries()) {
+        errorDetails[key] = decodeURIComponent(value);
+      }
+
+      const errorDetailsDiv = document.getElementById("error-details");
+      errorDetailsDiv.innerHTML = `
+        <p><strong>Error:</strong> ${errorDetails.isError}</p>
+        <p><strong>Error Code:</strong> ${errorDetails.errorCode}</p>
+        <p><strong>Error Message:</strong> <span style="color: red"> ${errorDetails.errorMessage}</span></p>
+        <p><strong>Transaction Ref:</strong> <span> ${errorDetails.reference}</span></p>
+      `;
+    </script>
+  </body>
+</html>
