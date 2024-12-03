@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-app.get("/error", (req, res) => {
+app.get("/callback", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "error.html"));
 });
 
@@ -29,7 +29,7 @@ app.get("/api/create-payment", async function (req, res) {
     phone: "08012345678",
     firstName: "John",
     lastName: "Doe",
-    callBackUrl: `${APP_URL}/error`, // replace with your desired callback URL
+    callBackUrl: `${APP_URL}/callback`, // replace with your desired callback URL
     transactionId: Math.floor(Math.random() * 99999999) + "",
   };
 
