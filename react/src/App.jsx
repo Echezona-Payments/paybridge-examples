@@ -17,6 +17,8 @@ function App() {
       currency: "NGN",
       mode: "Live",
       productId: "[]",
+      firstName: "Daniel",
+      lastName: "Ese",
       applyConviniencyCharge: true,
       productDescription: "MTN",
       bodyColor: "#0000",
@@ -89,7 +91,7 @@ function App() {
             onClick={initializePayment}
             disabled={submitting}
           >
-            {submitting ? "Processing..." : `Pay ₦100.00`}
+            {submitting ? "Processing..." : "Pay ₦100.00"}
           </button>
           <div className="mt-10">
             {error && (
