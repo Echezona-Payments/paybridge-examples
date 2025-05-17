@@ -9,8 +9,11 @@ function App() {
 
   const initializePayment = () => {
     setSubmitting(true);
+    setError(null);
+    setSuccess(null);
+
     const requestParams = {
-      amount: "20.10",
+      amount: "100.00",
       transactionId: `${Math.floor(Math.random() * 1000000)}`,
       email: "sample@mail.com",
       publicKey: "public key goes here",
@@ -59,8 +62,9 @@ function App() {
         },
         request: requestParams,
       });
-    } catch (error) {
-      console.warn(error);
+    } catch (err) {
+      console.error(err);
+      setError("An unexpected error occurred during payment initialization.");
     } finally {
       setSubmitting(false);
     }
@@ -78,7 +82,7 @@ function App() {
           <h1 className="text-3xl font-semibold font-jakarta">
             PayBridge React Example
           </h1>
-          <p>
+          <p className="text-sm text-gray-600">
             The PayBridge React Example shows how to integrate the PayBridge API
             into a React app for secure payments and dynamic transfers.
           </p>
@@ -98,7 +102,7 @@ function App() {
           </div>
           <div className="mt-10">
             {success && (
-              <p className="text-red-500 font-medium animate-bounce">{error}</p>
+              <p className="text-green-500 font-medium animate-bounce">{success}</p>
             )}
           </div>
         </div>
